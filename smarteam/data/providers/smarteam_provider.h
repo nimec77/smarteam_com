@@ -17,7 +17,7 @@ public:
 
     constexpr static auto const kProgId = L"SmarTeam.Application";
 
-    IDispatch* get_engine();
+    virtual IDispatch* get_engine();
 
 private:
     IDispatch* smarteam_app{};

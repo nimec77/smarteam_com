@@ -8,16 +8,17 @@
 #include <iostream>
 #include <sstream>
 #include <windows.h>
-
+#include <data/data_helper.h>
 
 class EngineProvider {
 public:
-    explicit EngineProvider(IDispatch *engineApp);
+    explicit EngineProvider(IDispatch *engine_app);
 
     virtual ~EngineProvider();
 
-    IDispatch *create_session(const wchar_t* application_name, const wchar_t* configuration_name);
+    virtual IDispatch *create_session(const wchar_t* application_name, const wchar_t* configuration_name);
 
+    virtual IDispatch *get_database(long index);
 private:
     IDispatch *engine_app;
 };
