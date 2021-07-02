@@ -10,6 +10,7 @@
 #include <windows.h>
 
 #include <data/data_helper.h>
+#include <constants.h>
 
 
 class DatabaseProvider {
@@ -18,9 +19,9 @@ class DatabaseProvider {
 
   virtual ~DatabaseProvider();
 
-  virtual const wchar_t *get_alias();
+  virtual _bstr_t get_alias();
 
-  virtual const wchar_t *get_password();
+  virtual _bstr_t get_password();
 
  private:
   IDispatch *database_app;

@@ -2,17 +2,13 @@
 // Created by nim on 30.06.2021.
 //
 #include "smarteam_provider.h"
-#include "../data_helper.h"
 
 
 SmarteamProvider::SmarteamProvider()  {
     std::cout << "SmarteamProvider start" << std::endl;
-
-    CoInitialize(nullptr);
-
     CLSID clsid;
 
-    auto hr = CLSIDFromProgID(kProgId, &clsid);
+    auto hr = CLSIDFromProgID(kSmarTeamProgId, &clsid);
 
     if (FAILED(hr)) {
         std::string error = "SmarteamProvider CLSIDFromProgID error:" + std::to_string(hr);
@@ -20,6 +16,17 @@ SmarteamProvider::SmarteamProvider()  {
         throw std::exception(error.c_str());
     }
 
+    IUnknown *i_unknown;
+    hr = GetActiveObject(clsid, nullptr, &i_unknown);
+    if (SUCCEEDED(hr)) {
+      hr = i_unknown->QueryInterface(IID_IDispatch, (void **)&smarteam_app);
+      if (FAILED(hr)) {
+        std::string error = "SmarteamProvider QueryInterface error:" + std::to_string(hr);
+        std::cerr << error << std::endl;
+        throw std::exception(error.c_str());
+      }
+      return;
+    }
     hr = CoCreateInstance(clsid, nullptr, CLSCTX_LOCAL_SERVER, IID_IDispatch,
                           (void **) &smarteam_app);
     if (FAILED(hr)) {

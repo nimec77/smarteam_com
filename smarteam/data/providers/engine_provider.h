@@ -9,6 +9,7 @@
 #include <sstream>
 #include <windows.h>
 #include <data/data_helper.h>
+#include <constants.h>
 
 class EngineProvider {
 public:
@@ -16,7 +17,7 @@ public:
 
     virtual ~EngineProvider();
 
-    virtual IDispatch *create_session(const wchar_t* application_name, const wchar_t* configuration_name);
+    virtual IDispatch *create_session(_bstr_t& application_name, _bstr_t& configuration_name);
 
     virtual IDispatch *get_database(long index);
 private:

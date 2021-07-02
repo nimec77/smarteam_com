@@ -9,8 +9,8 @@ DatabaseProvider::~DatabaseProvider() {
   std::cout << "~DatabaseProvider start" << std::endl;
   data_helper::safe_release(database_app);
 }
-const wchar_t *DatabaseProvider::get_alias() {
-  auto dispatch_id = data_helper::get_names(reinterpret_cast<IDispatch &>(*database_app), L"Alias");
+_bstr_t DatabaseProvider::get_alias() {
+  auto dispatch_id = data_helper::get_names(reinterpret_cast<IDispatch &>(*database_app), kAlias);
 
   DISPPARAMS dp = {nullptr, nullptr, 0, 0};
 
@@ -24,10 +24,10 @@ const wchar_t *DatabaseProvider::get_alias() {
     throw std::exception(error.c_str());
   }
 
-  return reinterpret_cast<const wchar_t *>(result.pbstrVal);
+  return _bstr_t(result.bstrVal);
 }
-const wchar_t *DatabaseProvider::get_password() {
-  auto dispatch_id = data_helper::get_names(reinterpret_cast<IDispatch &>(*database_app), L"Password");
+_bstr_t DatabaseProvider::get_password() {
+  auto dispatch_id = data_helper::get_names(reinterpret_cast<IDispatch &>(*database_app), kPassword);
 
   DISPPARAMS dp = {nullptr, nullptr, 0, 0};
 
@@ -42,5 +42,5 @@ const wchar_t *DatabaseProvider::get_password() {
     throw std::exception(error.c_str());
   }
 
-  return  helper::bstr_to_wchar(result.bstrVal);
+  return  _bstr_t(result.bstrVal);
 }

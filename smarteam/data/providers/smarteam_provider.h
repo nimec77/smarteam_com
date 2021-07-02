@@ -7,6 +7,8 @@
 #include <iostream>
 #include <sstream>
 #include <windows.h>
+#include <constants.h>
+#include <data/data_helper.h>
 
 
 class SmarteamProvider {
@@ -14,8 +16,6 @@ public:
     SmarteamProvider();
 
     virtual ~SmarteamProvider();
-
-    constexpr static auto const kProgId = L"SmarTeam.Application";
 
     virtual IDispatch* get_engine();
 

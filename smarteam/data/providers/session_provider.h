@@ -9,6 +9,7 @@
 #include <sstream>
 #include <windows.h>
 #include <data/data_helper.h>
+#include <constants.h>
 
 class SessionProvider {
  public:
@@ -16,9 +17,14 @@ class SessionProvider {
 
   virtual ~SessionProvider();
 
-  virtual IDispatch *open_database_connection(const wchar_t *connection_string,
-                                              const wchar_t *database_password,
+  virtual IDispatch *open_database_connection(_bstr_t& connection_string,
+                                              _bstr_t& database_password,
                                               bool password_is_encoded);
+
+  virtual bool user_logged_on();
+
+  virtual bool user_login(_bstr_t& user_name, _bstr_t& password);
+
  private:
   IDispatch *session_app;
 };

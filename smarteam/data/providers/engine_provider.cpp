@@ -11,17 +11,17 @@ EngineProvider::~EngineProvider() {
   data_helper::safe_release(engine_app);
 }
 
-IDispatch *EngineProvider::create_session(const wchar_t *application_name, const wchar_t *configuration_name) {
+IDispatch *EngineProvider::create_session(_bstr_t& application_name, _bstr_t& configuration_name) {
 
-  auto dispatch_id = data_helper::get_names(reinterpret_cast<IDispatch &>(*engine_app), L"CreateSession");
+  auto dispatch_id = data_helper::get_names(reinterpret_cast<IDispatch &>(*engine_app), kCreateSession);
 
   DISPPARAMS dp = {nullptr, nullptr, 0, 0};
 
   VARIANT args[2];
   args[0].vt = VT_BSTR;
-  args[0].bstrVal = SysAllocString(application_name);
+  args[0].bstrVal = configuration_name;
   args[1].vt = VT_BSTR;
-  args[1].bstrVal = SysAllocString(configuration_name);
+  args[1].bstrVal = application_name;
   dp.rgvarg = args;
   dp.cArgs = 2;
   dp.cNamedArgs = 0;
@@ -41,7 +41,7 @@ IDispatch *EngineProvider::create_session(const wchar_t *application_name, const
 }
 
 IDispatch *EngineProvider::get_database(long index) {
-  auto dispatch_id = data_helper::get_names(reinterpret_cast<IDispatch &>(*engine_app), L"Databases");
+  auto dispatch_id = data_helper::get_names(reinterpret_cast<IDispatch &>(*engine_app), kDatabases);
 
   DISPPARAMS dp = {nullptr, nullptr, 0, 0};
 
